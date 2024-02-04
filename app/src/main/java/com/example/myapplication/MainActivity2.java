@@ -94,6 +94,9 @@ public class MainActivity2 extends AppCompatActivity {
 
     private void torte() {
         // Handle the "Torte i kolaci" menu item click
+        Intent intent = new Intent(this,TorteActivity.class);
+        startActivity(intent);
+        return;
     }
     private void obavestenja() {
         User logged = (User) getIntent().getSerializableExtra("loggedInUser");
