@@ -1,0 +1,34 @@
+<!-- res/menu/menu_main.xml -->
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+  >    <item
+
+        android:id="@+id/promocije"
+        android:title="Promocije"
+     />
+    <item
+        android:id="@+id/torte"
+        android:title="Torte i kolaci"
+     />
+    <item
+        android:id="@+id/obavestenja"
+        android:title="Obavestenja"
+      />
+    <item
+        android:id="@+id/kontakt"
+        android:title="Kontakt"
+
+       />
+    <item
+        android:id="@+id/korpa"
+        android:title="Korpa"
+      />
+    <item
+        android:id="@+id/change"
+        android:title="Promena podataka"
+       />
+    <item
+        android:id="@+id/odjava"
+        android:title="Odjava"
+       />
+</menu>
