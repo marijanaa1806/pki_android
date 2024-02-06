@@ -18,13 +18,14 @@ public class PromocijeActivity extends MainActivity2 {
     private ImageAdapter imageAdapter;
     private Handler handler;
     private Runnable runnable;
-    private int delay = 2000; // Set the delay in milliseconds
+    private int delay = 2000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.promocije);
         Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("");
         setSupportActionBar(toolbar);
 
         viewPager = findViewById(R.id.viewPager);
@@ -53,10 +54,8 @@ public class PromocijeActivity extends MainActivity2 {
             }
         };
 
-        // Start automatic slide change
         handler.postDelayed(runnable, delay);
 
-        // Add a page change listener to restart the handler when the user interacts with the ViewPager
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -80,7 +79,6 @@ public class PromocijeActivity extends MainActivity2 {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        // Remove the callback to prevent memory leaks
         handler.removeCallbacks(runnable);
     }
 }

@@ -12,6 +12,7 @@ public class Kontakt extends MainActivity2 {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kontakt);
         Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("");
         setSupportActionBar(toolbar);
     }
 }

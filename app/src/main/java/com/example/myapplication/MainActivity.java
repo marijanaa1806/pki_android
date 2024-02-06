@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = preferences.edit();
 
         if (userJson != null) {
-            // Deserialize the String to a User object
             Gson gson = new Gson();
             User logged = gson.fromJson(userJson, User.class);
             String ind = preferences.getString("index","-1");
@@ -48,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
                 editor.apply();
             }
 
-            // Now you have the loggedInUser object
         }
 
 
@@ -62,7 +60,6 @@ public class MainActivity extends AppCompatActivity {
             User u = users.get(i);
             if (u.username.equals(username.getText().toString()) && u.password.equals(password.getText().toString())) {
                 Toast.makeText(getApplicationContext(), "Login successful", Toast.LENGTH_SHORT).show();
-                // Save loggedInUser object in SharedPreferences
                 SharedPreferences preferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
 
@@ -76,13 +73,11 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(this,MainActivity2.class);
                 intent.putExtra("loggedInUser",  u);
-                //intent.putExtra("index", i);
                 startActivity(intent);
-                return; // Exit the loop once a match is found
+                return;
             }
         }
 
-        // If no matching user is found
         Toast.makeText(getApplicationContext(), "Invalid credentials", Toast.LENGTH_SHORT).show();
     }
 
@@ -90,6 +85,5 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this,Register.class);
         startActivity(intent);
         return;
-        // Implement registration logic if needed
     }
 }

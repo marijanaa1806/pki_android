@@ -10,6 +10,10 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.google.android.material.tabs.TabLayout;
@@ -21,75 +25,23 @@ public class TorteActivity extends MainActivity2 {
     TabLayout tabLayout;
     ViewPager viewPager;
 
-    // Initializing slideImages array
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.torte);
         Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         toolbar.setTitle("");
+        setSupportActionBar(toolbar);
+
         tabLayout = findViewById(R.id.tab_layout);
-        tabLayout.setBackgroundResource(R.drawable.backgr);
 
         viewPager = findViewById(R.id.view_pager2);
-        ArrayList<String> arrayList = new ArrayList<>(0);
-
-        arrayList.add("Torte");
-        arrayList.add("Kolaci");
-
+        PagerAdapter pagerAdapter = new PagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(pagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
-        prepareViewPager(viewPager, arrayList);
 
     }
 
-    private void prepareViewPager(ViewPager viewPager, ArrayList<String> arrayList) {
-        MainAdapter adapter = new MainAdapter(getSupportFragmentManager());
 
-        for (int i = 0; i < arrayList.size(); i++) {
-            MainFragment mainFragment = new MainFragment();
-
-            Bundle bundle = new Bundle();
-
-            bundle.putString("title", arrayList.get(i));
-
-            mainFragment.setArguments(bundle);
-
-            adapter.addFragment(mainFragment, arrayList.get(i));
-        }
-
-        viewPager.setAdapter(adapter);
-    }
-
-    private static class MainAdapter extends FragmentPagerAdapter {
-        private final ArrayList<Fragment> fragmentArrayList = new ArrayList<>();
-        private final ArrayList<String> stringArrayList = new ArrayList<>();
-
-        public void addFragment(Fragment fragment, String s) {
-            fragmentArrayList.add(fragment);
-            stringArrayList.add(s);
-        }
-
-        public MainAdapter(FragmentManager supportFragmentManager) {
-            super(supportFragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-        }
-
-        @NonNull
-        @Override
-        public Fragment getItem(int position) {
-            return fragmentArrayList.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return fragmentArrayList.size();
-        }
-
-        @Nullable
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return stringArrayList.get(position);
-        }
-    }
 }

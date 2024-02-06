@@ -27,7 +27,7 @@ import java.util.List;
 public class MainActivity2 extends AppCompatActivity {
     private static final int REQUEST_CHANGE = 1; // You can choose any unique request code
     private static final int RESULT_OK = 200; // You can choose any unique request code
-    public List<Order> orders = new ArrayList<>();
+    public  static List<Order> orders = new ArrayList<>();
     User logged ;
 
     @Override
@@ -58,7 +58,6 @@ public class MainActivity2 extends AppCompatActivity {
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
         int itemId = item.getItemId();
 
         if (itemId == R.id.promocije) {
@@ -88,23 +87,19 @@ public class MainActivity2 extends AppCompatActivity {
     }
 
 
-    // Define your methods for each menu item click
     private void promo() {
-        // Handle the "Promocije" menu item click
         Intent intent = new Intent(this,PromocijeActivity.class);
         startActivity(intent);
         return;
     }
 
     private void torte() {
-        // Handle the "Torte i kolaci" menu item click
         Intent intent = new Intent(this,TorteActivity.class);
         intent.putExtra("loggedInUser",logged);
         startActivity(intent);
         return;
     }
     private void obavestenja() {
-      //  User logged = (User) getIntent().getSerializableExtra("loggedInUser");
 
         List<Order> myOrders = new ArrayList<>();
         for (Order o :orders){
@@ -128,7 +123,6 @@ public class MainActivity2 extends AppCompatActivity {
 
 
     private void kontakt() {
-        // Handle the "Kontakt" menu item click
         Intent intent = new Intent(this,Kontakt.class);
         startActivity(intent);
         return;
@@ -136,64 +130,37 @@ public class MainActivity2 extends AppCompatActivity {
 
     private void korpa() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
+        Order cur=null;
+        for (Order o :orders){
+            if(o.user.username.equals(logged.username) && o.status.equals("current"))cur=o;
+        }
         LayoutInflater inflater = this.getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.dialog_k, null);
-
+        List<Artikal> items = cur.items;
+        ListView listView = dialogView.findViewById(R.id.listViewItems);
+        ArrayAdapter<Artikal> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, items);
+        listView.setAdapter(adapter);
         builder.setView(dialogView)
                 .setPositiveButton("Naruci", (dialogInterface, i) -> {
-                    // Handle positive button click
-                    // String prezime = ((EditText)dialogView.findViewById(R.id.prezime)).getText().toString();
-                   // Toast.makeText(getApplicationContext(), "Prezime je:", Toast.LENGTH_SHORT).show();
+//Qprodji kroz ordere i promeni status
                 })
                 .setNegativeButton("Zatvori", (dialogInterface, i) -> {
-                    // Handle negative button click
                 });
 
         AlertDialog dialog = builder.create();
         dialog.show();
     }
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == REQUEST_CHANGE && resultCode == RESULT_OK) {
-            User changedUser = (User) data.getSerializableExtra("changedUser");
-            User logged = (User) getIntent().getSerializableExtra("loggedInUser");
-            List<User> usersList = (List<User>) getIntent().getSerializableExtra("usersList");
-            for(int i = 0;i<usersList.size();i++){
-                if(usersList.get(i).username.equals(logged.username)){
-                    usersList.set(i,changedUser);
-                    getIntent().removeExtra("changedUser");
-                    getIntent().removeExtra("loggedInUser");
-                    getIntent().putExtra("loggedInUser",logged);
-                    getIntent().putExtra("usersList",(Serializable) usersList);
-                    User logged2 = (User) getIntent().getSerializableExtra("loggedInUser");
-
-                    Toast.makeText(getApplicationContext(), "Login successful"+logged2.address, Toast.LENGTH_SHORT).show();
-
-                }
-            }
-        }
-    }
     private void change() {
-        // Handle the "Promena podataka" menu item click
         Intent intent = new Intent(this, Change.class);
-       // startActivityForResult(intent, REQUEST_CHANGE, null);
         intent.putExtra("loggedInUser",logged);
-
        startActivity(intent);
         return;
     }
 
     private void odjava() {
-        // Handle the "Odjava" menu item click
         Intent intent = new Intent(this,MainActivity.class);
         User logged = (User) getIntent().getSerializableExtra("loggedInUser");
-
-        intent.putExtra("maybeChanged",logged);
-        int ind = getIntent().getIntExtra("index",-1);
-        getIntent().putExtra("index",ind);
         getIntent().removeExtra("loggedInUser");
         startActivity(intent);
         return;
