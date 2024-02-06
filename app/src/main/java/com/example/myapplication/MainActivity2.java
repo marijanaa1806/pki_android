@@ -28,7 +28,7 @@ public class MainActivity2 extends AppCompatActivity {
     private static final int REQUEST_CHANGE = 1; // You can choose any unique request code
     private static final int RESULT_OK = 200; // You can choose any unique request code
     public List<Order> orders = new ArrayList<>();
-
+    User logged ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +38,12 @@ public class MainActivity2 extends AppCompatActivity {
         toolbar.setTitle("");
 
         setSupportActionBar(toolbar);
-   //     User logged = (User) getIntent().getSerializableExtra("loggedInUser");
-        User changed = (User) getIntent().getSerializableExtra("changedUser");
+        logged = (User) getIntent().getSerializableExtra("loggedInUser");
+       /* User changed = (User) getIntent().getSerializableExtra("changedUser");
+        if(changed!=null){
+            User logged = (User) getIntent().getSerializableExtra("loggedInUser");
+
+        }*/
 
 
     }
@@ -95,11 +99,12 @@ public class MainActivity2 extends AppCompatActivity {
     private void torte() {
         // Handle the "Torte i kolaci" menu item click
         Intent intent = new Intent(this,TorteActivity.class);
+        intent.putExtra("loggedInUser",logged);
         startActivity(intent);
         return;
     }
     private void obavestenja() {
-        User logged = (User) getIntent().getSerializableExtra("loggedInUser");
+      //  User logged = (User) getIntent().getSerializableExtra("loggedInUser");
 
         List<Order> myOrders = new ArrayList<>();
         for (Order o :orders){
@@ -163,6 +168,10 @@ public class MainActivity2 extends AppCompatActivity {
                     getIntent().removeExtra("loggedInUser");
                     getIntent().putExtra("loggedInUser",logged);
                     getIntent().putExtra("usersList",(Serializable) usersList);
+                    User logged2 = (User) getIntent().getSerializableExtra("loggedInUser");
+
+                    Toast.makeText(getApplicationContext(), "Login successful"+logged2.address, Toast.LENGTH_SHORT).show();
+
                 }
             }
         }
@@ -170,15 +179,21 @@ public class MainActivity2 extends AppCompatActivity {
     private void change() {
         // Handle the "Promena podataka" menu item click
         Intent intent = new Intent(this, Change.class);
-        startActivityForResult(intent, REQUEST_CHANGE);
+       // startActivityForResult(intent, REQUEST_CHANGE, null);
+        intent.putExtra("loggedInUser",logged);
 
-       /* startActivity(intent);
-        return;*/
+       startActivity(intent);
+        return;
     }
 
     private void odjava() {
         // Handle the "Odjava" menu item click
         Intent intent = new Intent(this,MainActivity.class);
+        User logged = (User) getIntent().getSerializableExtra("loggedInUser");
+
+        intent.putExtra("maybeChanged",logged);
+        int ind = getIntent().getIntExtra("index",-1);
+        getIntent().putExtra("index",ind);
         getIntent().removeExtra("loggedInUser");
         startActivity(intent);
         return;

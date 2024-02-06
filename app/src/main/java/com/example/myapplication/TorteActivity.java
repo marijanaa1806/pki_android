@@ -10,13 +10,18 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
+import android.widget.ListView;
+
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class TorteActivity extends MainActivity2 {
     TabLayout tabLayout;
     ViewPager viewPager;
+
+    // Initializing slideImages array
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +40,8 @@ public class TorteActivity extends MainActivity2 {
         arrayList.add("Kolaci");
 
         tabLayout.setupWithViewPager(viewPager);
-
         prepareViewPager(viewPager, arrayList);
+
     }
 
     private void prepareViewPager(ViewPager viewPager, ArrayList<String> arrayList) {

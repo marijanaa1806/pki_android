@@ -3,10 +3,13 @@ package com.example.myapplication;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -27,6 +30,27 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "new user "+newUser.username, Toast.LENGTH_SHORT).show();
 
         }
+        SharedPreferences preferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        String userJson = preferences.getString("loggedIn", null);
+        SharedPreferences.Editor editor = preferences.edit();
+
+        if (userJson != null) {
+            // Deserialize the String to a User object
+            Gson gson = new Gson();
+            User logged = gson.fromJson(userJson, User.class);
+            String ind = preferences.getString("index","-1");
+            if(!ind.equals("-1")){
+                int index = Integer.parseInt(ind);
+                users.set(index,logged);
+                editor.remove("loggedInUser");
+                editor.remove("index");
+
+                editor.apply();
+            }
+
+            // Now you have the loggedInUser object
+        }
+
 
     }
 
@@ -38,10 +62,21 @@ public class MainActivity extends AppCompatActivity {
             User u = users.get(i);
             if (u.username.equals(username.getText().toString()) && u.password.equals(password.getText().toString())) {
                 Toast.makeText(getApplicationContext(), "Login successful", Toast.LENGTH_SHORT).show();
+                // Save loggedInUser object in SharedPreferences
+                SharedPreferences preferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+
+                Gson gson = new Gson();
+                String userJson = gson.toJson(u);
+
+                editor.putString("loggedIn", userJson);
+                editor.putString("index", String.valueOf(i));
+
+                editor.apply();
 
                 Intent intent = new Intent(this,MainActivity2.class);
                 intent.putExtra("loggedInUser",  u);
-                intent.putExtra("usersList", (Serializable) users);
+                //intent.putExtra("index", i);
                 startActivity(intent);
                 return; // Exit the loop once a match is found
             }
