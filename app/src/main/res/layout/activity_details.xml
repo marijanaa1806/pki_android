@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/backgr" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include layout="@layout/header" />
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/header_background_color" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="200px">
+
+            <TableRow>
+
+                <ImageView
+                    android:id="@+id/slika"
+                    android:layout_width="match_parent"
+                    android:layout_height="500px"
+                    android:scaleType="centerCrop" />
+
+            </TableRow>
+            <TableRow  android:background="@color/boja">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:id="@+id/naziv"
+                    android:layout_span="2" />
+
+            </TableRow>
+
+            <TableRow  android:background="@color/boja">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:id="@+id/opis"
+                    android:layout_span="2" />
+
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:layout_width="200px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Unesi kolicinu:"
+                    android:layout_span="1" />
+
+                <EditText
+                    android:id="@+id/quantity"
+                    android:layout_width="33dp"
+                    android:layout_height="wrap_content"
+                    android:layout_span="1"
+
+                    android:layout_weight="3"
+                    android:background="@color/white" />
+            </TableRow>
+
+            <TableRow>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="addOrder"
+                    android:text="Dodaj"
+                    android:gravity="center"
+                    android:layout_span="2" />
+            </TableRow>
+        </TableLayout>
+    </LinearLayout>
+
+        <ListView
+            android:id="@+id/commentListView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:divider="@null"
+            android:dividerHeight="0dp" />
+
+    </LinearLayout>
+
+</RelativeLayout>
